@@ -1,3 +1,3 @@
 #!/bin/bash
-# Displays listening ports using the exact flags expected by the checker
-sudo netstat -lntup
+# Displays all active sockets (matching TCP LISTEN, UDP, and UNIX sockets from the example)
+sudo netstat -ap
