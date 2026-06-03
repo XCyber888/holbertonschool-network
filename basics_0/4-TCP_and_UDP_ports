@@ -1,3 +1,2 @@
 #!/bin/bash
-# Displays all active sockets (matching TCP LISTEN, UDP, and UNIX sockets from the example)
-sudo netstat -ap
+netstat -l -p
