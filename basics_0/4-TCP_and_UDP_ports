@@ -1,0 +1,3 @@
+#!/bin/bash
+# A Bash script that displays listening ports with their PID and program name.
+netstat -lp
