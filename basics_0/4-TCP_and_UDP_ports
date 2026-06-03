@@ -1,3 +1,3 @@
 #!/bin/bash
-# Displays listening sockets (both Internet and UNIX domain) with PID and program name
-sudo netstat -lnp
+# Displays listening ports with program names and PIDs exactly matching the example
+sudo netstat -lp
