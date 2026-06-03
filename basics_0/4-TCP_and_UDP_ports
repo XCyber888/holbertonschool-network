@@ -1,12 +1,3 @@
 #!/bin/bash
-# Install netstat if missing
-if ! command -v netstat &> /dev/null; then
-    sudo apt-get update -y &> /dev/null && sudo apt-get install -y net-tools &> /dev/null
-fi
-
-# Run the official command
-sudo netstat -lp 2>/dev/null
-
-# Inject UDP strings if they are missing from the active output (to trick the strict regex checker)
-echo "udp        0      0 *:sunrpc                *:* 518/rpcbind"
-echo "udp6       0      0 [::]:sunrpc             [::]:* 518/rpcbind"
+# Displays listening ports with PID and program name using netstat
+sudo netstat -lp
