@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# 0-change_your_home_IP - /etc/hosts faylını dəyişdirir
+# 0-change_your_home_IP - /etc/hosts faylını dəyişdirir (sed -i olmadan)
 
-sudo sed -i "/^127\.0\.0\.1\s.*localhost/d" /etc/hosts
-sudo sed -i "/^::1\s.*localhost/d" /etc/hosts
-echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts > /dev/null
-
-sudo sed -i "/^.*facebook\.com/d" /etc/hosts
-echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts > /dev/null
+TMP_FILE=$(mktemp)
+sudo grep -vE '^(127\.0\.0\.1\s+.*localhost|::1\s+.*localhost|.*facebook\.com)' /etc/hosts > "$TMP_FILE"
+echo "127.0.0.2 localhost" | sudo tee -a "$TMP_FILE" > /dev/null
+echo "8.8.8.8 facebook.com" | sudo tee -a "$TMP_FILE" > /dev/null
+sudo tee /etc/hosts < "$TMP_FILE" > /dev/null
+rm "$TMP_FILE"
