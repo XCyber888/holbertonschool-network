@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# 0-change_your_home_IP - /etc/hosts faylını dəyişdirir (sed -i olmadan)
+# Configures /etc/hosts so localhost resolves to 127.0.0.2 and facebook.com to 8.8.8.8
 
+# Create a safe temporary file
 TMP_FILE=$(mktemp)
-sudo grep -vE '^(127\.0\.0\.1\s+.*localhost|::1\s+.*localhost|.*facebook\.com)' /etc/hosts > "$TMP_FILE"
-echo "127.0.0.2 localhost" | sudo tee -a "$TMP_FILE" > /dev/null
-echo "8.8.8.8 facebook.com" | sudo tee -a "$TMP_FILE" > /dev/null
-sudo tee /etc/hosts < "$TMP_FILE" > /dev/null
+
+# Filter out existing localhost and facebook.com entries to avoid duplication
+grep -vE 'localhost|facebook\.com' /etc/hosts > "$TMP_FILE"
+
+# Append the new required mappings
+echo "127.0.0.2 localhost" >> "$TMP_FILE"
+echo "8.8.8.8 facebook.com" >> "$TMP_FILE"
+
+# Overwrite the actual hosts file using sudo
+sudo cp "$TMP_FILE" /etc/hosts
+
+# Clean up temp file
 rm "$TMP_FILE"
